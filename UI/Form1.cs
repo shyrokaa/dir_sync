@@ -1,3 +1,4 @@
+using dir_sync.Logging;
 using System.Windows.Forms;
 
 namespace dir_sync
@@ -13,17 +14,36 @@ namespace dir_sync
         private string sourcePath;
         private string targetPath;
 
+        private Logger dataFlowLogger;
+
         public Form1()
         {
+            // base winforms init
             InitializeComponent();
+
+
+
+            // specialized
+
+            InitializeObjects();
             InitializeTitleBarDrag();
             InitializeTematic();
-            LoadIcon();
+
+
         }
 
-        //icon loader
-        private void LoadIcon()
+
+        public void InitializeObjects()
         {
+            // logger
+
+            dataFlowLogger = new Logger("log.json");
+
+            richTextBox1.Text = dataFlowLogger.PrintLogs();
+
+
+
+            // ICONS
             // Initialize the NotifyIcon
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = new Icon("picture.ico"); // Set the icon to display in the system tray
@@ -32,6 +52,15 @@ namespace dir_sync
 
             // click event
             notifyIcon.Click += NotifyIcon_Click;
+
+
+        }
+        private void InitializeTitleBarDrag()
+        {
+            // Attach mouse event handlers to the panel.
+            panel3.MouseDown += PanelTitleBar_MouseDown;
+            panel3.MouseMove += PanelTitleBar_MouseMove;
+            panel3.MouseUp += PanelTitleBar_MouseUp;
         }
 
 
@@ -43,6 +72,7 @@ namespace dir_sync
 
 
         }
+
 
 
         // event handlers
@@ -61,13 +91,6 @@ namespace dir_sync
             }
         }
 
-        private void InitializeTitleBarDrag()
-        {
-            // Attach mouse event handlers to the panel.
-            panel3.MouseDown += PanelTitleBar_MouseDown;
-            panel3.MouseMove += PanelTitleBar_MouseMove;
-            panel3.MouseUp += PanelTitleBar_MouseUp;
-        }
 
 
         private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
@@ -143,14 +166,31 @@ namespace dir_sync
         // Button: File Dialog for the source
         private void button1_Click(object sender, EventArgs e)
         {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "Select the source folder";
 
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    label5.Text = folderDialog.SelectedPath;
+                }
+            }
         }
 
         // Button: File Dialog for the destination
         private void button2_Click(object sender, EventArgs e)
         {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "Select the destination folder";
 
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    label6.Text = folderDialog.SelectedPath;
+                }
+            }
         }
+
 
         //Button: turn on file sync thread
         private void button3_Click(object sender, EventArgs e)

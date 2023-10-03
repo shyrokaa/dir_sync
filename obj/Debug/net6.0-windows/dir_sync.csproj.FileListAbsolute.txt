@@ -15,3 +15,6 @@ E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sy
 E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.genruntimeconfig.cache
 E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\ref\dir_sync.dll
 E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.Properties.Resources.resources
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.csproj.AssemblyReference.cache
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.csproj.CopyComplete

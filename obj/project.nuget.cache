@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "7rrGIOszygot7PTMqYUcgqJOICihZMVk/Qbt4/YY6iN2v/JfG2sXzBh3a+fIQYUEkgtr7Jh9Lzgo9khSYdeMbA==",
+  "dgSpecHash": "rdaSlFsyJfowWapD7vu0zJKsGx688PXn/8p9LqpaRujoVZHyKEqvG6DNkA9X6PH9QXBzsHADIh6n9AjRgNWa/w==",
   "success": true,
   "projectFilePath": "E:\\personal\\job\\VEEAM\\dir_sync\\dir_sync\\dir_sync\\dir_sync.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\TinCan\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
