@@ -1,0 +1,16 @@
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\dir_sync.exe
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\dir_sync.deps.json
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\dir_sync.runtimeconfig.json
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\dir_sync.dll
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\bin\Debug\net6.0-windows\dir_sync.pdb
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.Form1.resources
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.csproj.GenerateResource.cache
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.GeneratedMSBuildEditorConfig.editorconfig
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.AssemblyInfoInputs.cache
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.AssemblyInfo.cs
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.csproj.CoreCompileInputs.cache
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.dll
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\refint\dir_sync.dll
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.pdb
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\dir_sync.genruntimeconfig.cache
+E:\personal\job\VEEAM\dir_sync\dir_sync\dir_sync\obj\Debug\net6.0-windows\ref\dir_sync.dll
