@@ -29,16 +29,22 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             folderBrowserDialog1 = new FolderBrowserDialog();
             button1 = new Button();
             button2 = new Button();
             panel1 = new Panel();
+            label7 = new Label();
+            comboBox1 = new ComboBox();
+            label6 = new Label();
+            label5 = new Label();
             label3 = new Label();
             label2 = new Label();
             panel4 = new Panel();
             button3 = new Button();
             panel2 = new Panel();
             panel3 = new Panel();
+            panel6 = new Panel();
             button6 = new Button();
             label1 = new Label();
             button5 = new Button();
@@ -56,7 +62,9 @@
             // 
             // button1
             // 
+            button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.ForeColor = Color.FromArgb(192, 192, 255);
             button1.Location = new Point(24, 7);
             button1.Margin = new Padding(24, 3, 3, 3);
             button1.Name = "button1";
@@ -64,10 +72,13 @@
             button1.TabIndex = 4;
             button1.Text = "Source";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
+            button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button2.ForeColor = Color.FromArgb(192, 192, 255);
             button2.Location = new Point(270, 7);
             button2.Margin = new Padding(3, 3, 24, 3);
             button2.Name = "button2";
@@ -75,10 +86,16 @@
             button2.TabIndex = 5;
             button2.Text = "Destination";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDark;
+            panel1.BackColor = Color.Transparent;
+            panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label5);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(panel4);
@@ -88,23 +105,65 @@
             panel1.Size = new Size(400, 240);
             panel1.TabIndex = 2;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.FromArgb(192, 192, 255);
+            label7.Location = new Point(123, 84);
+            label7.Name = "label7";
+            label7.Size = new Size(61, 15);
+            label7.TabIndex = 9;
+            label7.Text = "Used hash";
+            // 
+            // comboBox1
+            // 
+            comboBox1.BackColor = Color.Black;
+            comboBox1.FlatStyle = FlatStyle.Flat;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(123, 102);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(150, 23);
+            comboBox1.TabIndex = 8;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(273, 54);
+            label6.Name = "label6";
+            label6.Size = new Size(12, 15);
+            label6.TabIndex = 7;
+            label6.Text = "-";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(27, 54);
+            label5.Name = "label5";
+            label5.Size = new Size(12, 15);
+            label5.TabIndex = 6;
+            label5.Text = "-";
+            // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(16, 45);
+            label3.Font = new Font("Sitka Small", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.ForeColor = Color.FromArgb(192, 192, 255);
+            label3.Location = new Point(273, 18);
             label3.Name = "label3";
-            label3.Size = new Size(38, 15);
+            label3.Size = new Size(104, 23);
             label3.TabIndex = 5;
-            label3.Text = "label3";
+            label3.Text = "Destination";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(16, 15);
+            label2.Font = new Font("Sitka Small", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = Color.FromArgb(192, 192, 255);
+            label2.Location = new Point(27, 18);
             label2.Name = "label2";
-            label2.Size = new Size(38, 15);
+            label2.Size = new Size(65, 23);
             label2.TabIndex = 4;
-            label2.Text = "label2";
+            label2.Text = "Source";
             // 
             // panel4
             // 
@@ -116,13 +175,16 @@
             // 
             // button3
             // 
+            button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.Location = new Point(120, 7);
+            button3.ForeColor = Color.FromArgb(192, 192, 255);
+            button3.Location = new Point(24, 7);
             button3.Name = "button3";
-            button3.Size = new Size(150, 40);
+            button3.Size = new Size(346, 40);
             button3.TabIndex = 6;
             button3.Text = "Start";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // panel2
             // 
@@ -135,7 +197,8 @@
             // 
             // panel3
             // 
-            panel3.BackColor = SystemColors.AppWorkspace;
+            panel3.BackColor = Color.Transparent;
+            panel3.Controls.Add(panel6);
             panel3.Controls.Add(button6);
             panel3.Controls.Add(label1);
             panel3.Controls.Add(button5);
@@ -146,14 +209,25 @@
             panel3.TabIndex = 3;
             panel3.Paint += panel3_Paint;
             // 
+            // panel6
+            // 
+            panel6.BackColor = Color.FromArgb(203, 181, 221);
+            panel6.Location = new Point(81, 18);
+            panel6.Margin = new Padding(3, 18, 3, 3);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(421, 4);
+            panel6.TabIndex = 5;
+            // 
             // button6
             // 
-            button6.BackColor = SystemColors.AppWorkspace;
+            button6.BackColor = Color.Transparent;
             button6.FlatStyle = FlatStyle.Flat;
             button6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button6.Location = new Point(564, 3);
+            button6.ForeColor = Color.FromArgb(192, 192, 255);
+            button6.Location = new Point(564, 8);
+            button6.Margin = new Padding(3, 8, 3, 3);
             button6.Name = "button6";
-            button6.Size = new Size(50, 25);
+            button6.Size = new Size(50, 24);
             button6.TabIndex = 2;
             button6.Text = ">";
             button6.UseVisualStyleBackColor = false;
@@ -163,6 +237,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sitka Small", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.White;
             label1.Location = new Point(3, 5);
             label1.Name = "label1";
             label1.Size = new Size(76, 24);
@@ -171,12 +246,14 @@
             // 
             // button5
             // 
-            button5.BackColor = SystemColors.AppWorkspace;
+            button5.BackColor = Color.Transparent;
             button5.FlatStyle = FlatStyle.Flat;
             button5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button5.Location = new Point(508, 3);
+            button5.ForeColor = Color.FromArgb(192, 192, 255);
+            button5.Location = new Point(508, 8);
+            button5.Margin = new Padding(3, 8, 3, 3);
             button5.Name = "button5";
-            button5.Size = new Size(50, 25);
+            button5.Size = new Size(50, 24);
             button5.TabIndex = 1;
             button5.Text = "_";
             button5.UseVisualStyleBackColor = false;
@@ -184,12 +261,14 @@
             // 
             // button4
             // 
-            button4.BackColor = SystemColors.AppWorkspace;
+            button4.BackColor = Color.Transparent;
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.Location = new Point(620, 3);
+            button4.ForeColor = Color.FromArgb(192, 192, 255);
+            button4.Location = new Point(620, 8);
+            button4.Margin = new Padding(3, 8, 3, 3);
             button4.Name = "button4";
-            button4.Size = new Size(50, 25);
+            button4.Size = new Size(50, 24);
             button4.TabIndex = 3;
             button4.Text = "x";
             button4.UseVisualStyleBackColor = false;
@@ -197,8 +276,9 @@
             // 
             // panel5
             // 
-            panel5.BackColor = SystemColors.ControlDark;
+            panel5.BackColor = Color.Transparent;
             panel5.Controls.Add(textBox1);
+            panel5.ForeColor = SystemColors.ControlText;
             panel5.Location = new Point(12, 48);
             panel5.Name = "panel5";
             panel5.Size = new Size(270, 240);
@@ -206,7 +286,7 @@
             // 
             // textBox1
             // 
-            textBox1.BackColor = SystemColors.InfoText;
+            textBox1.BackColor = SystemColors.WindowText;
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.ForeColor = SystemColors.Window;
             textBox1.Location = new Point(3, 3);
@@ -231,7 +311,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.AppWorkspace;
+            BackColor = Color.Black;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(700, 310);
             Controls.Add(label4);
             Controls.Add(panel5);
@@ -272,5 +353,10 @@
         private System.Windows.Forms.Timer timer1;
         private Button button6;
         private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private ComboBox comboBox1;
+        private Panel panel6;
     }
 }
