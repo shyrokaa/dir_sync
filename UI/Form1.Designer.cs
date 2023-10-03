@@ -39,6 +39,7 @@
             label6 = new Label();
             label5 = new Label();
             panel4 = new Panel();
+            button7 = new Button();
             button3 = new Button();
             panel3 = new Panel();
             panel6 = new Panel();
@@ -50,7 +51,6 @@
             richTextBox1 = new RichTextBox();
             timer1 = new System.Windows.Forms.Timer(components);
             label4 = new Label();
-            button7 = new Button();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -149,6 +149,20 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(394, 50);
             panel4.TabIndex = 3;
+            // 
+            // button7
+            // 
+            button7.Enabled = false;
+            button7.FlatStyle = FlatStyle.Flat;
+            button7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button7.ForeColor = Color.FromArgb(192, 192, 255);
+            button7.Location = new Point(229, 7);
+            button7.Name = "button7";
+            button7.Size = new Size(150, 40);
+            button7.TabIndex = 7;
+            button7.Text = "Stop";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button3
             // 
@@ -276,18 +290,6 @@
             label4.TabIndex = 5;
             label4.Text = "version";
             label4.TextAlign = ContentAlignment.BottomCenter;
-            // 
-            // button7
-            // 
-            button7.FlatStyle = FlatStyle.Flat;
-            button7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button7.ForeColor = Color.FromArgb(192, 192, 255);
-            button7.Location = new Point(229, 7);
-            button7.Name = "button7";
-            button7.Size = new Size(150, 40);
-            button7.TabIndex = 7;
-            button7.Text = "Stop";
-            button7.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

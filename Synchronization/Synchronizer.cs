@@ -27,11 +27,20 @@ namespace dir_sync.Synchronization
 
         public void SyncFolders()
         {
-            // Implement folder synchronization logic here.
-            // You can use methods like Directory.GetFiles and File.Move to achieve this.
-
             // Get a list of files in the source folder.
             string[] sourceFiles = Directory.GetFiles(sourceFolderPath);
+
+            // Get a list of directories in the source folder.
+            string[] sourceDirectories = Directory.GetDirectories(sourceFolderPath);
+
+            // Get a list of directories in the destination folder.
+            string[] destinationDirectories = Directory.GetDirectories(destinationFolderPath);
+
+            // Create a HashSet to store the names of directories in the source folder.
+            HashSet<string> sourceDirectoryNames = new HashSet<string>(
+                sourceDirectories.Select(directory => Path.GetFileName(directory)),
+                StringComparer.OrdinalIgnoreCase // Use case-insensitive comparison
+            );
 
             foreach (string sourceFilePath in sourceFiles)
             {
@@ -45,10 +54,6 @@ namespace dir_sync.Synchronization
                     // Encrypt the source file before copying it to the destination.
                     // You can call your encryption method here.
                     byte[] encryptedData = EncryptFile(sourceFilePath);
-
-                    // Decrypt the data back to its original form when needed.
-                    // You can call your decryption method here.
-                    // byte[] decryptedData = DecryptFile(encryptedData);
 
                     // Write the encrypted data to the destination file.
                     File.WriteAllBytes(destinationFilePath, encryptedData);
@@ -64,14 +69,33 @@ namespace dir_sync.Synchronization
                     Console.WriteLine($"Error synchronizing file: {ex.Message}");
                 }
             }
+
+            // Delete surplus directories in the destination folder.
+            foreach (string destinationDirectory in destinationDirectories)
+            {
+                string directoryName = Path.GetFileName(destinationDirectory);
+
+                if (!sourceDirectoryNames.Contains(directoryName))
+                {
+                    // Directory in the destination folder does not exist in the source.
+                    // You can add code here to delete the surplus directory.
+                    Directory.Delete(destinationDirectory, true); // Use 'true' to delete recursively.
+                }
+            }
         }
+
 
         // Placeholder methods for encryption and decryption (implement these in a separate class).
         private byte[] EncryptFile(string sourceFilePath)
         {
             // Implement encryption logic here.
             // Return the encrypted data as a byte array.
-            throw new NotImplementedException();
+            // You should use a real encryption method or library here.
+            byte[] sourceData = File.ReadAllBytes(sourceFilePath);
+            // Replace this with your actual encryption logic.
+            byte[] encryptedData = sourceData; // Placeholder, replace with actual encryption.
+
+            return encryptedData;
         }
 
         // Placeholder methods for encryption and decryption (implement these in a separate class).
@@ -79,9 +103,12 @@ namespace dir_sync.Synchronization
         {
             // Implement decryption logic here.
             // Return the decrypted data as a byte array.
-            throw new NotImplementedException();
-        }
+            // You should use a real decryption method or library here.
+            // Replace this with your actual decryption logic.
+            byte[] decryptedData = encryptedData; // Placeholder, replace with actual decryption.
 
+            return decryptedData;
+        }
 
         /// <summary>
         /// Logs a file operation in the JSON log file.

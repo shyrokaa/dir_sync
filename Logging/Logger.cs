@@ -78,20 +78,25 @@ namespace dir_sync.Logging
             List<LogEntry> logs = ReadLogs();
             StringBuilder logString = new StringBuilder();
 
-            foreach (LogEntry log in logs)
+            if (logs != null)
             {
-                logString.AppendLine();
-                logString.AppendLine("///////////////////////////////////////////////////");
-                logString.AppendLine($"Time Created: {log.TimeCreated}");
-                logString.AppendLine($"Source Path: {log.SourcePath}");
-                logString.AppendLine($"Destination Path: {log.DestinationPath}");
-                logString.AppendLine($"File Size (Bytes): {log.FileSizeBytes}");
-                logString.AppendLine($"Status: {log.Status}");
-                logString.AppendLine("//////////////////////////////////////////////////");
-                logString.AppendLine();
+                foreach (LogEntry log in logs)
+                {
+                    logString.AppendLine();
+                    logString.AppendLine("////////////////////////////////////////");
+                    logString.AppendLine($"Time Created: {log.TimeCreated}");
+                    logString.AppendLine($"Source Path: {log.SourcePath}");
+                    logString.AppendLine($"Destination Path: {log.DestinationPath}");
+                    logString.AppendLine($"File Size (Bytes): {log.FileSizeBytes}");
+                    logString.AppendLine($"Status: {log.Status}");
+                    logString.AppendLine("////////////////////////////////////////");
+                    logString.AppendLine();
+                }
             }
 
+
             return logString.ToString();
+
         }
 
 
