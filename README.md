@@ -1,50 +1,46 @@
 # DirSync
 
-This project is a work in progress.Please stand by for updates
-
 ## Table of Contents
 
 - [Description](#description)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+- [Prerequisites](#prerequisites)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
+---
 
 ## Description
 
+DirSync is a simple application designed to synchronize two files.
 
-## Features
+---
 
+## Prerequisites
 
-## Screenshots
+Before using DirSync, make sure you have the following prerequisites:
 
+- Visual Studio with C# and .NET 6+ installed
+- Windows Forms
 
-## Getting Started
+---
 
+## Installation
 
-### Prerequisites
+To get started with DirSync, follow these steps:
 
+1. Open the project in Visual Studio.
+2. Compile the project.
 
-### Installation
-
+---
 
 ## Usage
 
+Once you have installed DirSync, follow these instructions to use it:
 
-## Contributing
+1. Open the application.
+2. Select the folders that you want to synchronize.
+3. Choose the hashing method you want to use for the checks.
+4. Start the synchronization process.
 
+DirSync will automatically perform synchronization every second. If needed, you can turn off the synchronization.
 
-
-## License
-
-
-
-## Acknowledgments
-
-
-
-
+---
