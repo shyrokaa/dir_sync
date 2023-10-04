@@ -48,9 +48,11 @@
             button5 = new Button();
             button4 = new Button();
             panel5 = new Panel();
+            button8 = new Button();
             richTextBox1 = new RichTextBox();
             timer1 = new System.Windows.Forms.Timer(components);
             label4 = new Label();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -105,7 +107,9 @@
             // 
             comboBox1.BackColor = Color.Black;
             comboBox1.FlatStyle = FlatStyle.Flat;
+            comboBox1.ForeColor = Color.FromArgb(192, 192, 255);
             comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "MD5", "SHA-256" });
             comboBox1.Location = new Point(27, 158);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(150, 23);
@@ -260,12 +264,26 @@
             // 
             panel5.BackColor = Color.Transparent;
             panel5.BackgroundImage = (Image)resources.GetObject("panel5.BackgroundImage");
+            panel5.Controls.Add(button8);
             panel5.Controls.Add(richTextBox1);
             panel5.ForeColor = SystemColors.ControlText;
-            panel5.Location = new Point(12, 48);
+            panel5.Location = new Point(15, 48);
             panel5.Name = "panel5";
             panel5.Size = new Size(270, 240);
             panel5.TabIndex = 4;
+            // 
+            // button8
+            // 
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button8.ForeColor = Color.FromArgb(192, 192, 255);
+            button8.Location = new Point(58, 187);
+            button8.Name = "button8";
+            button8.Size = new Size(150, 40);
+            button8.TabIndex = 11;
+            button8.Text = "Clear Logs";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // richTextBox1
             // 
@@ -275,7 +293,7 @@
             richTextBox1.Location = new Point(3, 3);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(264, 231);
+            richTextBox1.Size = new Size(264, 178);
             richTextBox1.TabIndex = 10;
             richTextBox1.Text = "";
             // 
@@ -284,11 +302,12 @@
             label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label4.AutoSize = true;
             label4.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.ForeColor = Color.FromArgb(192, 192, 255);
             label4.Location = new Point(315, 291);
             label4.Name = "label4";
-            label4.Size = new Size(56, 18);
+            label4.Size = new Size(40, 18);
             label4.TabIndex = 5;
-            label4.Text = "version";
+            label4.Text = "v_1.0";
             label4.TextAlign = ContentAlignment.BottomCenter;
             // 
             // Form1
@@ -338,5 +357,7 @@
         private Panel panel6;
         private RichTextBox richTextBox1;
         private Button button7;
+        private Button button8;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

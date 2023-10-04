@@ -1,5 +1,6 @@
 ﻿using dir_sync.Logging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,89 +26,154 @@ namespace dir_sync.Synchronization
             this.logger = new Logger(logFilePath);
         }
 
-        public void SyncFolders()
+        // Function that does the synchronization based on the provided paths and the chosen hash algorithm.
+        public void SyncFolders(string chosenHash)
         {
-            // Get a list of files in the source folder.
-            string[] sourceFiles = Directory.GetFiles(sourceFolderPath);
+            if (string.IsNullOrEmpty(sourceFolderPath) || string.IsNullOrEmpty(destinationFolderPath))
+            {
+                MessageBox.Show("Source or target folder path is missing.");
+                return;
+            }
 
-            // Get a list of directories in the source folder.
-            string[] sourceDirectories = Directory.GetDirectories(sourceFolderPath);
+            if (!Directory.Exists(sourceFolderPath) || !Directory.Exists(destinationFolderPath))
+            {
+                MessageBox.Show("Source or target folder does not exist.");
+                return;
+            }
 
-            // Get a list of directories in the destination folder.
-            string[] destinationDirectories = Directory.GetDirectories(destinationFolderPath);
+            HasherBase hasher;
 
-            // Create a HashSet to store the names of directories in the source folder.
+            // Determine which hash algorithm to use based on the chosenHash variable.
+            if (string.Equals(chosenHash, "MD5", StringComparison.OrdinalIgnoreCase))
+            {
+                hasher = new MD5Hash();
+            }
+            else if (string.Equals(chosenHash, "SHA-256", StringComparison.OrdinalIgnoreCase))
+            {
+                hasher = new SHA256Hash();
+            }
+            else
+            {
+                MessageBox.Show("Invalid hash algorithm specified.");
+                return;
+            }
+
+            // Sync files and directories
+            SyncFilesAndDirectories(sourceFolderPath, destinationFolderPath, hasher);
+        }
+
+
+        // Helper method to sync files and directories recursively.
+        private void SyncFilesAndDirectories(string sourcePath, string destinationPath, HasherBase hasher)
+        {
+            // Get a list of files in the source directory.
+            string[] sourceFiles = Directory.GetFiles(sourcePath);
+
+            // Get a list of directories in the source directory.
+            string[] sourceDirectories = Directory.GetDirectories(sourcePath);
+
+            // Create a HashSet to store the names of directories in the source directory.
             HashSet<string> sourceDirectoryNames = new HashSet<string>(
                 sourceDirectories.Select(directory => Path.GetFileName(directory)),
                 StringComparer.OrdinalIgnoreCase // Use case-insensitive comparison
             );
 
+            // Sync files in the source directory.
             foreach (string sourceFilePath in sourceFiles)
             {
                 try
                 {
-                    // Create the destination path by combining the destination folder path
-                    // and the file name from the source path.
                     string fileName = Path.GetFileName(sourceFilePath);
-                    string destinationFilePath = Path.Combine(destinationFolderPath, fileName);
+                    string destinationFilePath = Path.Combine(destinationPath, fileName);
 
-                    // Encrypt the source file before copying it to the destination.
-                    // You can call your encryption method here.
-                    byte[] encryptedData = EncryptFile(sourceFilePath);
+                    // Check if the destination file already exists and has the same content.
+                    bool filesAreEqual = FilesHaveSameHash(sourceFilePath, destinationFilePath, hasher);
 
-                    // Write the encrypted data to the destination file.
-                    File.WriteAllBytes(destinationFilePath, encryptedData);
+                    if (!filesAreEqual)
+                    {
+                        // Ensure the destination directory exists
+                        Directory.CreateDirectory(Path.GetDirectoryName(destinationFilePath));
 
-                    // Log the successful file transfer operation.
-                    LogFileOperation(sourceFilePath, destinationFilePath, "completed");
+                        // Copy the source file to the destination.
+                        File.Copy(sourceFilePath, destinationFilePath, true);
+
+                        // Log the successful file transfer operation.
+                        LogFileOperation(sourceFilePath, destinationFilePath, "completed");
+                    }
                 }
                 catch (Exception ex)
                 {
                     // Handle any exceptions that may occur during the synchronization process.
                     // Log errors using the logger.
                     LogFileOperation(sourceFilePath, "", "failed"); // Log failure status
-                    Console.WriteLine($"Error synchronizing file: {ex.Message}");
+                    MessageBox.Show($"Error synchronizing file: {ex.Message}");
                 }
             }
 
-            // Delete surplus directories in the destination folder.
-            foreach (string destinationDirectory in destinationDirectories)
+            // Sync subdirectories in the source directory.
+            foreach (string sourceDir in sourceDirectories)
             {
-                string directoryName = Path.GetFileName(destinationDirectory);
+                string dirName = Path.GetFileName(sourceDir);
+                string destinationDir = Path.Combine(destinationPath, dirName);
 
-                if (!sourceDirectoryNames.Contains(directoryName))
+                if (!Directory.Exists(destinationDir))
                 {
-                    // Directory in the destination folder does not exist in the source.
-                    // You can add code here to delete the surplus directory.
-                    Directory.Delete(destinationDirectory, true); // Use 'true' to delete recursively.
+                    // If the destination directory does not exist, create it.
+                    Directory.CreateDirectory(destinationDir);
+                }
+
+                // Recursively sync files and subdirectories in the source subdirectory.
+                SyncFilesAndDirectories(sourceDir, destinationDir, hasher);
+            }
+
+            // Delete surplus files and directories in the destination directory.
+            foreach (string destinationFile in Directory.GetFiles(destinationPath))
+            {
+                string fileName = Path.GetFileName(destinationFile);
+
+                // Check if the destination file does not exist in the source directory.
+                if (!sourceFiles.Contains(Path.Combine(sourcePath, fileName)))
+                {
+                    File.Delete(destinationFile);
+                }
+            }
+
+            foreach (string destinationDir in Directory.GetDirectories(destinationPath))
+            {
+                string dirName = Path.GetFileName(destinationDir);
+
+                if (!sourceDirectoryNames.Contains(dirName))
+                {
+                    Directory.Delete(destinationDir, true);
                 }
             }
         }
 
 
-        // Placeholder methods for encryption and decryption (implement these in a separate class).
-        private byte[] EncryptFile(string sourceFilePath)
+        // Helper method to compare files based on their hash values.
+        private bool FilesHaveSameHash(string filePath1, string filePath2, HasherBase hasher)
         {
-            // Implement encryption logic here.
-            // Return the encrypted data as a byte array.
-            // You should use a real encryption method or library here.
-            byte[] sourceData = File.ReadAllBytes(sourceFilePath);
-            // Replace this with your actual encryption logic.
-            byte[] encryptedData = sourceData; // Placeholder, replace with actual encryption.
+            if (!File.Exists(filePath1))
+            {
+                // Check if the first file exists, if not, return false.
+                return false;
+            }
 
-            return encryptedData;
-        }
+            if (!File.Exists(filePath2))
+            {
+                // Check if the second file exists, if not, return false.
+                return false;
+            }
 
-        // Placeholder methods for encryption and decryption (implement these in a separate class).
-        private byte[] DecryptFile(byte[] encryptedData)
-        {
-            // Implement decryption logic here.
-            // Return the decrypted data as a byte array.
-            // You should use a real decryption method or library here.
-            // Replace this with your actual decryption logic.
-            byte[] decryptedData = encryptedData; // Placeholder, replace with actual decryption.
+            byte[] file1 = File.ReadAllBytes(filePath1);
+            byte[] file2 = File.ReadAllBytes(filePath2);
 
-            return decryptedData;
+            // Calculate the hash of each file.
+            byte[] hash1 = hasher.CalculateHash(file1);
+            byte[] hash2 = hasher.CalculateHash(file2);
+
+            // Compare the hash values.
+            return StructuralComparisons.StructuralEqualityComparer.Equals(hash1, hash2);
         }
 
         /// <summary>

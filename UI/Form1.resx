@@ -2743,7 +2743,7 @@
   <data name="panel5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAZAAAADwCAYAAAAuPDIiAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAA/7JJREFUeF58/de6ZElypIlGRAbZnO/gkZwWyWIoVIE10AzTje6eOXPe/zXOTd74
+        DAAACwwBP0AiyAAA/7JJREFUeF58/de6ZElypIlGRAbZnO/gkZwWyWIoVIE10AzTje6eOXPe/zXOTd74
         kV9+U1++IxO4sG8RNzVuIqpqZssfXZ3e/P+ePPlkd/zi7KeT52c/HT0/TTjp9fjF+U/HRxc/D7z/6LeR
         Ix3lvT85OkkgzuXP5E7yjsC75odM09nS2uKcJZzm/uyn0/X++Ohqn5b5kkbiHaYxvze/i8iaL+Xx2eu+
         DM1nawflVhmItwIyH78jX+swbXC84h6Uc4WRfZB287Xt9/Krrod5zfPhO+XTts8i8yCNh/2ozDxzPc+7
@@ -5361,6 +5361,9 @@
   </data>
   <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>184, 17</value>
+  </metadata>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>272, 17</value>
   </metadata>
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

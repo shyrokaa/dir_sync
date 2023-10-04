@@ -25,10 +25,6 @@ namespace dir_sync.Logging
         /// Reads the current logs from the file.
         /// </summary>
         /// <returns>A list of log entries.</returns>
-        /// <summary>
-        /// Reads the current logs from the file. If the file doesn't exist, it creates it.
-        /// </summary>
-        /// <returns>A list of log entries.</returns>
         public List<LogEntry> ReadLogs()
         {
             List<LogEntry> logs = new List<LogEntry>();
@@ -99,13 +95,20 @@ namespace dir_sync.Logging
 
         }
 
-
         /// <summary>
-        /// Deletes all the logs from the file.
+        /// Deletes all entries from the JSON log file.
         /// </summary>
         public void WipeLogs()
         {
-            File.Delete(filePath);
+            // Read the existing JSON data from the file.
+            List<LogEntry> logs = ReadLogs();
+
+            // Clear the list of logs (removes all entries).
+            logs.Clear();
+
+            // Serialize the empty list back to JSON and overwrite the file.
+            string json = JsonConvert.SerializeObject(logs, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filePath, json);
         }
 
     }

@@ -15,12 +15,12 @@ namespace dir_sync
         // data
         private string sourcePath;
         private string targetPath;
-
+        private string selectedHash;
         private Logger dataFlowLogger;
 
 
         // threads
-        private System.Threading.Timer syncTimer;
+        private Task synchronizationTask;
         private CancellationTokenSource cancellationTokenSource;
 
         public Form1()
@@ -119,7 +119,6 @@ namespace dir_sync
         }
 
         // Handle other form events and logic...
-
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             // Clean up the NotifyIcon when the form is closing
@@ -182,22 +181,33 @@ namespace dir_sync
             }
         }
 
-        // Button: turn on file sync thread
-        private async void button3_Click(object sender, EventArgs e)
+        // Button: turn on file sync
+        private void button3_Click(object sender, EventArgs e)
         {
-            // Disable the button while synchronization is in progress
+            // Check if sourcePath or targetPath is null or empty
+            if (string.IsNullOrEmpty(sourcePath) || string.IsNullOrEmpty(targetPath))
+            {
+                MessageBox.Show("Source or target path is missing.");
+                return;
+            }
 
+            selectedHash = comboBox1.SelectedItem as string;
+
+            if (string.IsNullOrEmpty(selectedHash))
+            {
+                // Handle the case where no item is selected.
+                MessageBox.Show("No hash selected.");
+                return;
+            }
+
+            // Disable the button while synchronization is in progress
             button1.Enabled = false;
             button2.Enabled = false;
             button3.Enabled = false;
-
             button7.Enabled = true;
 
-            // Initialize the CancellationTokenSource
-            cancellationTokenSource = new CancellationTokenSource();
-
-            // Start a background task for periodic synchronization
-            await Task.Factory.StartNew(() => StartSyncPeriodically(), cancellationTokenSource.Token);
+            // Call the synchronization method directly without starting a background task
+            StartSyncPeriodically();
         }
 
         // Method to start synchronization periodically
@@ -205,40 +215,44 @@ namespace dir_sync
         {
             int intervalInMilliseconds = 1000; // Adjust the interval as needed (e.g., 60000ms = 1 minute)
 
-            syncTimer = new System.Threading.Timer(
-                async (_) =>
+            cancellationTokenSource = new CancellationTokenSource();
+
+            synchronizationTask = Task.Run(async () =>
+            {
+                while (!cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     // Create a new synchronizer for each sync operation
                     Synchronizer synchronizer = new Synchronizer(sourcePath, targetPath, "log.json");
 
-                    synchronizer.SyncFolders();
+                    synchronizer.SyncFolders(selectedHash);
 
                     // Update the UI with the logs on the UI thread
                     richTextBox1.Invoke(new Action(() =>
                     {
                         richTextBox1.Text = dataFlowLogger.PrintLogs();
                     }));
-                },
-                null,
-                TimeSpan.Zero, // Start immediately
-                TimeSpan.FromMilliseconds(intervalInMilliseconds)); // Interval between sync operations
+
+                    await Task.Delay(intervalInMilliseconds);
+                }
+            }, cancellationTokenSource.Token);
         }
 
-
         // Button: stops the thread completely, re-enables starting and changing options
-        private void button7_Click(object sender, EventArgs e)
+        private async void button7_Click(object sender, EventArgs e)
         {
             if (cancellationTokenSource != null)
             {
                 // Cancel the CancellationTokenSource to signal the thread to stop.
                 cancellationTokenSource.Cancel();
 
-                // Optionally, you can wait for the thread to complete if needed.
-                // For example, you can use Task.Wait:
-                // synchronizationTask.Wait();
+                // Optionally, you can wait for the task to complete if needed.
+                if (synchronizationTask != null)
+                {
+                    await synchronizationTask;
+                }
 
                 // Re-enable the buttons on the UI thread.
-                button7.Invoke(new Action(() =>
+                this.Invoke(new Action(() =>
                 {
                     button1.Enabled = true;
                     button2.Enabled = true;
@@ -248,29 +262,12 @@ namespace dir_sync
             }
         }
 
-
-
-        // Method to stop the synchronization thread
-        private void StopSync()
+        // Button : clears up the log file
+        private void button8_Click(object sender, EventArgs e)
         {
-            if (syncTimer != null)
-            {
-                syncTimer.Change(Timeout.Infinite, Timeout.Infinite);
-                syncTimer.Dispose();
-            }
-            cancellationTokenSource?.Cancel();
-
-            // Re-enable the button when synchronization is stopped
-            button3.Invoke(new Action(() =>
-            {
-                button1.Enabled = true;
-                button2.Enabled = true;
-                button3.Enabled = true;
-
-            }));
+            dataFlowLogger.WipeLogs();
+            richTextBox1.Text = dataFlowLogger.PrintLogs();
         }
-
-
     }
 }
 
